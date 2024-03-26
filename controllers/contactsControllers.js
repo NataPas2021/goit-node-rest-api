@@ -14,7 +14,7 @@ const getOneContact = async (req, res) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json(result);
+  res.status(200).json(result);
 };
 
 const deleteContact = async (req, res) => {
@@ -37,7 +37,7 @@ const updateContact = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.json(result);
+  res.status(200).json(result);
 };
 
 const updateContactStatus = async (req, res) => {
@@ -51,7 +51,7 @@ const updateContactStatus = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.json(result);
+  res.status(200).json(result);
 };
 
 export default {
