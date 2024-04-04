@@ -42,7 +42,7 @@ const signin = async (req, res) => {
   const { _id: id } = user;
   const payload = { id };
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "48h" });
-
+  await authServices.updateUser({ _id: id }, { token });
   res.status(200).json({
     token,
     user: {
@@ -52,7 +52,39 @@ const signin = async (req, res) => {
   });
 };
 
+const getCurrentUser = async (req, res) => {
+  const { email, subscription } = req.user;
+
+  res.status(200).json({
+    email,
+    subscription,
+  });
+};
+
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await authServices.updateUser({ _id }, { token: "" });
+
+  res.status(204).json({
+    message: "No Content",
+  });
+};
+
+// const updateSubscription = async (req, res) => {
+//   const { _id: id } = user;
+//   const { subscription } = req.query;
+//   await authServices.updateUser({ _id: id }, { subscription });
+//   res.status(200).json({
+//     user: {
+//       subscription: user.subscription,
+//     },
+//   });
+// };
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
+  getCurrentUser: ctrlWrapper(getCurrentUser),
+  logout: ctrlWrapper(logout),
+  //updateSubscription: ctrlWrapper(updateSubscription),
 };
