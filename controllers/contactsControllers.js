@@ -6,20 +6,11 @@ const getAll = async (req, res) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
-  const result = await contactsService.getAllContacts(
-    { owner },
-    {
-      skip,
-      limit,
-    }
-  );
-  const total = await contactsService.countContacts({ owner });
-  res.json({ total, page, result });
-
   if ("favorite" in req.query) {
+    console.log("here");
     const { favorite } = req.query;
     const result = await contactsService.getFilteredContacts({
-      favorite: true,
+      favorite,
     });
     if (!result) {
       throw HttpError(
@@ -29,6 +20,15 @@ const getAll = async (req, res) => {
     }
     res.status(200).json(result);
   }
+  const result = await contactsService.getAllContacts(
+    { owner },
+    {
+      skip,
+      limit,
+    }
+  );
+  const total = await contactsService.countContacts({ owner });
+  res.json({ total, page, result });
 };
 
 const getOneContact = async (req, res) => {

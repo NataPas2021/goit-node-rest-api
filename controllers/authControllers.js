@@ -70,21 +70,17 @@ const logout = async (req, res) => {
   });
 };
 
-// const updateSubscription = async (req, res) => {
-//   const { _id: id } = user;
-//   const { subscription } = req.query;
-//   await authServices.updateUser({ _id: id }, { subscription });
-//   res.status(200).json({
-//     user: {
-//       subscription: user.subscription,
-//     },
-//   });
-// };
+const updateSubscription = async (req, res) => {
+  const { _id, username, email } = req.user;
+  const { subscription } = req.body;
+  await authServices.updateUser({ _id }, { subscription });
+  res.status(200).json({ username, email, subscription });
+};
 
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   getCurrentUser: ctrlWrapper(getCurrentUser),
   logout: ctrlWrapper(logout),
-  //updateSubscription: ctrlWrapper(updateSubscription),
+  updateSubscription: ctrlWrapper(updateSubscription),
 };
