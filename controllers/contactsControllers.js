@@ -10,6 +10,7 @@ const getAll = async (req, res) => {
     console.log("here");
     const { favorite } = req.query;
     const result = await contactsService.getFilteredContacts({
+      owner,
       favorite,
     });
     if (!result) {
