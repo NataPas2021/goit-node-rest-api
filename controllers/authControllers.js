@@ -89,10 +89,11 @@ const updateSubscription = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
-  const { path: oldPath, filename } = req.file;
   if (!req.file) {
-    throw HttpError(400, "Plaese, add avatar picture");
+    throw HttpError(400, "Please, add avatar picture");
   }
+  const { path: oldPath, filename } = req.file;
+
   const newAvatarName = `${req.user.email}_${filename}`;
   const newAvatarPath = path.join(avatarsPath, newAvatarName);
 
