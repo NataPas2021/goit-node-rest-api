@@ -1,12 +1,14 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import gravatar from "gravatar";
+import fs from "fs/promises";
 import Jimp from "jimp";
 import path from "path";
 import "dotenv/config";
 import * as authServices from "../services/authServices.js";
 import HttpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
+import User from "../models/User.js";
 
 const { JWT_SECRET } = process.env;
 const avatarsPath = path.resolve("public", "avatars");
@@ -88,6 +90,9 @@ const updateSubscription = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: oldPath, filename } = req.file;
+  if (!req.file) {
+    throw HttpError(400, "Plaese, add avatar picture");
+  }
   const newAvatarName = `${req.user.email}_${filename}`;
   const newAvatarPath = path.join(avatarsPath, newAvatarName);
 
