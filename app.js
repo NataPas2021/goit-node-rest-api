@@ -1,15 +1,13 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import dotenv from "dotenv";
-//import mongoose from "mongoose";
+import "dotenv/config";
+import nodemailer from "nodemailer";
 
 import contactsRouter from "./routes/contactsRouter.js";
 import authRouter from "./routes/authRouter.js";
 
-dotenv.config();
-
-const { DB_HOST, PORT = 3000 } = process.env;
+// dotenv.config();
 
 const app = express();
 
@@ -30,19 +28,4 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-// mongoose
-//   .connect(DB_HOST)
-//   .then(() => console.log("Database connection successful"))
-//   .then(() => {
-//     app.listen(PORT, () => {
-//       console.log(`Server is running. Use our API on port: ${PORT}`);
-//     });
-//   })
-//   .catch((error) => {
-//     console.error(error.message);
-//     process.exit(1);
-//   });
-
 export default app;
-
-//UjmmLJAQFkH8BVi

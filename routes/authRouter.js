@@ -4,12 +4,21 @@ import {
   updateSubscriptionSchema,
   userSignInSchema,
   userSignUpSchema,
+  userEmailSchema,
 } from "../schemas/usersSchemas.js";
 import validateBody from "../decorators/validateBody.js";
 import authenticate from "../middlewares/authenticate.js";
 import upload from "../middlewares/upload.js";
 
 const authRouter = express.Router();
+
+authRouter.get("/verify/:verificationToken", authControllers.verify);
+
+authRouter.post(
+  "/verify",
+  validateBody(userEmailSchema),
+  authControllers.resendVerify
+);
 
 authRouter.post(
   "/register",
