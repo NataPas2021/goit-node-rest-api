@@ -6,7 +6,9 @@ WORKDIR /app
 
 # Копіюємо файли package.json та package-lock.json та встановлюємо залежності
 COPY package*.json ./
-RUN npm install
+
+#Для встановлення залежностей JS
+RUN npm ci
 
 # Копіюємо всі файли додатку у робочу директорію
 COPY . .
